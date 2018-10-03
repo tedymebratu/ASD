@@ -3,9 +3,6 @@ import java.util.List;
 
 public class Counter
 {
-    private TextFrame textframe;
-    private RectFrame rectframe;
-    private OvalFrame ovalframe;
     private int count;
     private List<Observer> observers=new ArrayList<>();
 
