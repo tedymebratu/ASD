@@ -1,38 +1,45 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Counter
+public class Counter implements Subject
 {
     private int count;
     private List<Observer> observers=new ArrayList<>();
 
     public Counter (TextFrame tf, RectFrame rf, OvalFrame of){
 
-        addObserver(tf);
-        addObserver(rf);
-        addObserver(of);
+        attach(tf);
+        attach(rf);
+        attach(of);
         count = 0;
     }
 
-    public void addObserver(Observer observer){
-        observers.add(observer);
+    @Override
+    public void attach(Object observer){
+        observers.add((Observer) observer);
     }
 
-    public void removeObserver(Observer observer){
-        observers.remove(observer);
+    @Override
+    public void detach(Object observer){
+        observers.remove((Observer) observer);
     }
     public void increment(){
         count++;
-        for(Observer observer: this.observers)
-            observer.update(count);
+        notify(count);
+
             }
     
     public void decrement(){
         if (count >0){
             count--;
-            for(Observer observer: this.observers)
-                observer.update(count);
-
+            notify(count);
         }
     }
+
+    @Override
+    public void notify(Object value) {
+        for(Observer observer: this.observers)
+            observer.update((int)count);
+    }
+
 }
